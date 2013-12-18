@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# program name (for the logs)
+PROGRAM="autoupdate"
+
+# auto update window (if you don't use anacron, 
+# and you don't want all your computers to update
+# at the same time
+WINDOW="<%= update_window %>"
+
+# simple wrapper around logger
+simple_logger(){
+    logger -t $PROGRAM -p  user.$1 $2
+}
+
+# a random generic sleep
+random_sleep(){
+    sleep $((`od -An -N3 -i /dev/urandom` % $WINDOW))
+}
+
+# we random sleep only if necessary
+if [ $WINDOW -ne 0 ]
+then
+    random_sleep
+fi
+
+# simple message to syslog
+simple_logger info "launching packages auto update"
+# we launch the update
+<%= scope.lookupvar('auto_update::params::update_command') %>
+
+# handle the return code of the update
+ret=$?
+if [ $ret -ne 0 ]
+then
+    # log message if error
+    simple_logger "warning" "auto update exit with error"
+else
+    # log message if success
+    simple_logger "info" "auto update success"
+fi
