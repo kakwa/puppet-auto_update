@@ -31,7 +31,7 @@ Just one optional parameter: `update_window`
  This parameter is used for randomizing the update time.
  If you have several OSes it will prevent all the OSes 
  from updating at the same time by just sleep a random number of
- seconds between 0 and <update_window>.
+ seconds between `0` and `$update_window`.
 
  Default value is 3600 seconds (1 hour).
 
