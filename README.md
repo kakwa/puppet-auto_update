@@ -3,6 +3,8 @@ auto_update
 
 A puppet module for auto-update your Debian/CentOS daily.
 
+If you use this module in production, you're crazy ☺.
+
 Description
 -----------
 
