@@ -1,10 +1,10 @@
-kakwa-auto_update
-=================
+auto_update
+===========
 
 A puppet module for auto-update your Debian/CentOS daily
 
-Class: auto_update
-==================
+auto_update
+-----------
 
 A very simple module dumping an auto update, non interactive script in cron.daily.
 
@@ -16,12 +16,10 @@ It relies on:
 * aptitude for Debian and derivatives
 
 Parameters
-==========
+----------
 
-Just one optional parameter: 
+Just one optional parameter: `update_window`.
 
-update_window
--------------
   
  This parameter is used for randomizing the update time.
  If you have several OSes it will prevent all the OSes 
@@ -33,7 +31,7 @@ update_window
  Set to 0 to disable.
 
 Examples
-========
+--------
 
 ```puppet
 
@@ -52,14 +50,17 @@ Examples
 ```
 
 Authors
-=======
+-------
 
 Carpentier Pierre-Francois <carpentier.pf@gmail.com>
 
 Copyright
-=========
+---------
 
-Copyright 2013 Carpentier
+Copyright 2013 Carpentier Pierre-Francois <carpentier.pf@gmail.com>
 
-License: MIT 
+License
+-------
+
+This module is release under MIT public license. 
 
