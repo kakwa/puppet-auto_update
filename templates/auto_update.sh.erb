@@ -5,7 +5,7 @@ PROGRAM="autoupdate"
 
 # auto update window (if you don't use anacron, 
 # and you don't want all your computers to update
-# at the same time
+# at the same time)
 WINDOW="<%= update_window %>"
 
 # simple wrapper around logger
@@ -13,18 +13,18 @@ simple_logger(){
     logger -t $PROGRAM -p  user.$1 $2
 }
 
-# a random generic sleep
+# a generic random sleep
 random_sleep(){
     sleep $((`od -An -N3 -i /dev/urandom` % $WINDOW))
 }
 
-# we random sleep only if necessary
+# random sleep only if necessary
 if [ $WINDOW -ne 0 ]
 then
     random_sleep
 fi
 
-# simple message to syslog
+# simple update start message to syslog
 simple_logger info "launching packages auto update"
 # we launch the update
 <%= scope.lookupvar('auto_update::params::update_command') %>
