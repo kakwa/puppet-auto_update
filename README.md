@@ -24,22 +24,6 @@ Supported OSes
 * Debian and derivatives
 * RedHat and derivatives
 
-Parameters
-----------
-
-Just one optional parameter: `update_window`
-
-  
-This parameter is used for randomizing the update time.
- 
-If you have several OSes it will prevent all the OSes 
-from updating at the same time by just sleeping a random number of
-seconds between `0` and `$update_window`.
-
-Default value is 3600 seconds (1 hour).
-
-Set to 0 to disable (if you use anacron for example).
-
 Examples
 --------
 
@@ -58,6 +42,24 @@ Examples
    update_window => '0',
  }
 ```
+
+Parameters
+----------
+
+Just one optional parameter: `update_window`
+
+  
+This parameter is used for randomizing the update time.
+ 
+If you have several OSes it will prevent all the OSes 
+from updating at the same time by just sleeping a random number of
+seconds between `0` and `$update_window`.
+
+Default value is 3600 seconds (1 hour).
+
+Set to `0` to disable (if you use anacron for example).
+
+
 
 Authors
 -------
