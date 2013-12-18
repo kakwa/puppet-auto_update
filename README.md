@@ -69,5 +69,5 @@ Copyright 2013 Carpentier Pierre-Francois <carpentier.pf@gmail.com>
 License
 -------
 
-This module is release under MIT public license. 
+This module is released under MIT public license. 
 
