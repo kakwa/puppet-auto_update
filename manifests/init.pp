@@ -55,7 +55,7 @@ class auto_update(
 )
 inherits auto_update::params{
     # we just put a simple script in cron.daily
-    file{ "${auto_update::params::cron_daily_dir}/auto_update.sh":
+    file{ "${auto_update::params::cron_daily_dir}/pkg_auto_update":
         content => template("${module_name}/auto_update.sh.erb"),
         owner   => 'root',
         group   => 'root',
