@@ -1,14 +1,14 @@
 auto_update
 ===========
 
-A puppet module for auto-update your Debian/CentOS daily.
+A puppet module setting-up daily auto-update your Debian/CentOS (or any yum/aptitude based distribution).
 
-If you use this module in production, you're crazy ☺.
+Blind update is risky, if you use this module in production, you're crazy ☺. But it could ease maintenance of non-critical infrastructures (like your developpement plateforms).
 
 Description
 -----------
 
-auto_update is a very simple module dumping an auto update, non interactive, script in cron.daily directory.
+auto_update is a very simple module dumping an auto update, non-interactive, script in cron.daily directory.
 
 It relies on:
 
@@ -51,7 +51,7 @@ Just one optional parameter: `update_window`
   
 This parameter is used for randomizing the update time.
  
-If you have several OSes it will prevent all the OSes 
+If you have several OSes, it will prevent all the OSes 
 from updating at the same time by just sleeping a random number of
 seconds between `0` and `$update_window`.
 
@@ -75,4 +75,3 @@ License
 -------
 
 This module is released under MIT public license. 
-
