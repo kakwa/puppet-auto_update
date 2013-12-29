@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Puppet-auto update by kakwa</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Puppet-auto update</h1>
+        <p>A puppet module auto-updating your Debian/CentOS daily</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/kakwa/puppet-auto_update" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/kakwa/puppet-auto_update/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/kakwa/puppet-auto_update/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>
+<a name="auto_update" class="anchor" href="#auto_update"><span class="octicon octicon-link"></span></a>auto_update</h1>
+
+<p>A puppet module setting-up daily auto-update your Debian/CentOS (or any yum/aptitude based distribution).</p>
+
+<p>Blind update is risky, if you use this module in production, you're crazy ☺. But it could ease maintenance of non-critical infrastructures (like your developpement plateforms).</p>
+
+<h2>
+<a name="description" class="anchor" href="#description"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p>auto_update is a very simple module dumping an auto update, non-interactive, script in cron.daily directory.</p>
+
+<p>It relies on:</p>
+
+<ul>
+<li>yum for RedHat and derivatives</li>
+<li>aptitude for Debian and derivatives</li>
+<li>cron</li>
+</ul><p>As this module is extremly simple and very specific, it will not handle those dependancies, they must be installed otherwise.</p>
+
+<h2>
+<a name="supported-oses" class="anchor" href="#supported-oses"><span class="octicon octicon-link"></span></a>Supported OSes</h2>
+
+<ul>
+<li>Debian and derivatives</li>
+<li>RedHat and derivatives</li>
+</ul><h2>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<div class="highlight highlight-puppet"><pre>
+<span class="c-Singleline"> # with the default random window (3600 seconds)</span>
+ <span class="kn">import</span> <span class="s">auto_update</span>
+
+<span class="c-Singleline"> # with a random sleep between 0 and 1337 seconds</span>
+ <span class="nc">class</span> <span class="p">{</span> <span class="ss">auto_update</span><span class="p">:</span>
+   <span class="nt">update_window</span> <span class="p">=&gt;</span> <span class="s1">'1337'</span><span class="p">,</span>
+ <span class="p">}</span><span class="c-Singleline"></span>
+
+<span class="c-Singleline"> # without a random sleep</span>
+ <span class="nc">class</span> <span class="p">{</span> <span class="ss">auto_update</span><span class="p">:</span>
+   <span class="nt">update_window</span> <span class="p">=&gt;</span> <span class="s1">'0'</span><span class="p">,</span>
+ <span class="p">}</span><span class="c-Singleline"></span>
+
+<span class="c-Singleline"> # log to syslog updated packages</span>
+<span class="c-Singleline"> # currently only works on Debian</span>
+ <span class="nc">class</span> <span class="p">{</span> <span class="ss">auto_update</span><span class="p">:</span>
+   <span class="nt">log_updated_packages</span> <span class="p">=&gt;</span> <span class="s1">'true'</span><span class="p">,</span>
+ <span class="p">}</span>
+
+</pre></div>
+
+<h2>
+<a name="parameters" class="anchor" href="#parameters"><span class="octicon octicon-link"></span></a>Parameters</h2>
+
+<p>Just two optional parameters: <code>update_window</code> and <code>log_updated_packages</code></p>
+
+<p>The parameter <code>update_window</code> is used for randomizing the update time.</p>
+
+<p>If you have several OSes, it will prevent all the OSes 
+from updating at the same time by just sleeping a random number of
+seconds between <code>0</code> and <code>$update_window</code>.</p>
+
+<p>Default value is 3600 seconds (1 hour).</p>
+
+<p>Set to <code>0</code> to disable (if you use anacron for example).</p>
+
+<p>The parameter <code>log_updated_packages</code> is used to log to syslog each updated packages.</p>
+
+<p>It could be useful to easily track what was updated, specialy if something broke.</p>
+
+<p>Values are <code>'true'</code> or <code>'false'</code>.</p>
+
+<p>Default is <code>'false'</code>, it will only log start of the update and the 
+result according to the return code of the update command.</p>
+
+<p>Currently <code>log_updated_packages</code> only works on aptitude based distribution.</p>
+
+<h2>
+<a name="launch-manually" class="anchor" href="#launch-manually"><span class="octicon octicon-link"></span></a>Launch manually</h2>
+
+<p>You can lauch this script manually:</p>
+
+<div class="highlight highlight-bash"><pre>root@your_host &gt; /etc/cron.daily/pkg_auto_update -h
+usage: pkg_auto_update <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-l<span class="o">]</span> <span class="o">[</span>-n<span class="o">]</span>
+
+Auto update script
+arguments:
+  -h: displays this <span class="nb">help</span>
+  -l: enables updated packages logs <span class="o">(</span>already enabled: <span class="nb">false</span><span class="o">)</span>
+  -n: update now, no sleep
+
+root@your_host &gt; /etc/cron.daily/pkg_auto_update -n -l
+</pre></div>
+
+<h2>
+<a name="authors" class="anchor" href="#authors"><span class="octicon octicon-link"></span></a>Authors</h2>
+
+<p>Carpentier Pierre-Francois <a href="mailto:carpentier.pf@gmail.com">carpentier.pf@gmail.com</a></p>
+
+<h2>
+<a name="copyright" class="anchor" href="#copyright"><span class="octicon octicon-link"></span></a>Copyright</h2>
+
+<p>Copyright 2013 Carpentier Pierre-Francois <a href="mailto:carpentier.pf@gmail.com">carpentier.pf@gmail.com</a></p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>This module is released under MIT public license. </p>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/kakwa">kakwa</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
