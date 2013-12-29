@@ -2,11 +2,24 @@
 
 # program name (for the logs)
 PROGRAM="autoupdate"
+LOG_UPDATED_PKG="<%= log_updated_packages %>"
 
 # auto update window (if you don't use anacron, 
 # and you don't want all your computers to update
 # at the same time)
 WINDOW="<%= update_window %>"
+
+# a simple help
+help(){
+  echo "usage: `basename $0` [-h]  [-l] [-n]"
+  echo ""
+  echo "Auto update script"
+  echo "arguments:"
+  echo "  -h: displays this help"
+  echo "  -l: enables updated packages logs (already enabled: $LOG_UPDATED_PKG)"
+  echo "  -n: update now, no sleep"
+  exit 1
+}
 
 # simple wrapper around logger
 simple_logger(){
@@ -17,6 +30,31 @@ simple_logger(){
 random_sleep(){
     sleep $((`od -An -N3 -i /dev/urandom` % $WINDOW))
 }
+
+# some options parsing for manual trigger
+while getopts ":hnl" opt; do
+  case $opt in
+    h) 
+        help
+        ;;
+    n)
+        WINDOW=0
+        ;;
+    l)
+        LOG_UPDATED_PKG='true'      
+        ;;
+    \?)
+        echo "Invalid option: -$OPTARG" >&2
+        help
+        exit 1
+        ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+        help
+        exit 1
+        ;;
+  esac
+done
 
 # random sleep only if necessary
 if [ $WINDOW -ne 0 ]
@@ -38,6 +76,15 @@ then
 else
     # log message if success
     simple_logger "info" "auto update success"
+fi
+
+# log updated packages
+if [ "$LOG_UPDATED_PKG" = 'true' ]
+then
+    <%= scope.lookupvar('auto_update::params::updated_packages_command') %> | while read line
+    do
+        simple_logger "info" "$line"
+    done
 fi
 
 # exit with the return code of the update

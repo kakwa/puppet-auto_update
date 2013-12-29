@@ -10,7 +10,7 @@
 #
 # === Parameters
 #
-# Just one optional parameter: 
+# Just two optional parameters: 
 #
 # [*update_window*]
 #   
@@ -22,6 +22,19 @@
 #  Default value is 3600 seconds (1 hour).
 #
 #  Set to 0 to disable.
+# 
+# [*log_updated_packages*]
+#
+#  The parameter `log_updated_packages` is used to log to syslog each updated packages.
+# 
+#  It could be useful to easily track what was updated, specialy if something broke.
+# 
+#  Values are 'true' or 'false'.
+# 
+#  Default is 'false', it will only log start of the update and the
+#  result according to the return code of the update command.
+# 
+#  Currently log_updated_packages only works on aptitude based distribution.
 #
 # === Examples
 #
@@ -33,11 +46,14 @@
 #    update_window => '1337',
 #  }
 #  
-#
-#
 #  # without a random sleep
 #  class { auto_update:
 #    update_window => '0',
+#  }
+#
+#  # with updated packages logs enabled
+#  class { auto_update:
+#    log_updated_packages => 'true',
 #  }
 #
 # === Authors
@@ -52,6 +68,7 @@
 #
 class auto_update(
     $update_window = '3600',
+    $log_updated_packages = 'false',
 )
 inherits auto_update::params{
     # we just put a simple script in cron.daily

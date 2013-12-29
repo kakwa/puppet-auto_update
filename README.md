@@ -41,15 +41,22 @@ Examples
  class { auto_update:
    update_window => '0',
  }
+
+ # log to syslog updated packages
+ # currently only works on Debian
+ class { auto_update:
+   log_updated_packages => 'true',
+ }
+
 ```
 
 Parameters
 ----------
 
-Just one optional parameter: `update_window`
+Just two optional parameters: `update_window` and `log_updated_packages`
 
   
-This parameter is used for randomizing the update time.
+The parameter `update_window` is used for randomizing the update time.
  
 If you have several OSes, it will prevent all the OSes 
 from updating at the same time by just sleeping a random number of
@@ -59,7 +66,34 @@ Default value is 3600 seconds (1 hour).
 
 Set to `0` to disable (if you use anacron for example).
 
+The parameter `log_updated_packages` is used to log to syslog each updated packages.
 
+It could be useful to easily track what was updated, specialy if something broke.
+
+Values are `'true'` or `'false'`.
+
+Default is `'false'`, it will only log start of the update and the 
+result according to the return code of the update command.
+
+Currently `log_updated_packages` only works on aptitude based distribution.
+
+Launch manually
+---------------
+
+You can lauch this script manually:
+
+```bash
+root@your_host > /etc/cron.daily/pkg_auto_update -h
+usage: pkg_auto_update [-h] [-l] [-n]
+
+Auto update script
+arguments:
+  -h: displays this help
+  -l: enables updated packages logs (already enabled: false)
+  -n: update now, no sleep
+
+root@your_host > /etc/cron.daily/pkg_auto_update -n -l
+``` 
 
 Authors
 -------
