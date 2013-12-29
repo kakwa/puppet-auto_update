@@ -3,7 +3,7 @@ auto_update
 
 A puppet module setting-up daily auto-update your Debian/CentOS (or any yum/aptitude based distribution).
 
-Blind update is risky, if you use this module in production, you're crazy ☺. But it could ease maintenance of non-critical infrastructures (like your developpement plateforms).
+Blind update is risky, if you use this module in production, you're crazy ☺. But it could ease maintenance of non-critical infrastructures (like your developpement platforms).
 
 Description
 -----------
