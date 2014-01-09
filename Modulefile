@@ -1,5 +1,5 @@
 name    'kakwa-auto_update'
-version '0.0.3'
+version '0.0.4'
 source 'https://github.com/kakwa/puppet-auto_update'
 author 'kakwa'
 license 'MIT'
