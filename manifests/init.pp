@@ -34,8 +34,6 @@
 #  Default is 'false', it will only log start of the update and the
 #  result according to the return code of the update command.
 # 
-#  Currently log_updated_packages only works on aptitude based distribution.
-#
 # === Examples
 #
 #  # with the default random window (3600 seconds)

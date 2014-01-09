@@ -43,7 +43,6 @@ Examples
  }
 
  # log to syslog updated packages
- # currently only works on Debian
  class { auto_update:
    log_updated_packages => 'true',
  }
@@ -74,8 +73,6 @@ Values are `'true'` or `'false'`.
 
 Default is `'false'`, it will only log start of the update and the 
 result according to the return code of the update command.
-
-Currently `log_updated_packages` only works on aptitude based distribution.
 
 Launch manually
 ---------------
