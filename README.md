@@ -106,3 +106,7 @@ License
 -------
 
 This module is released under MIT public license. 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/kakwa/puppet-auto_update/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
