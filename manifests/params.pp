@@ -5,7 +5,7 @@ class auto_update::params {
         #Debian family variables
         'Debian': {
             $cron_daily_dir = '/etc/cron.daily/'
-            $update_command = 'aptitude clean; aptitude update; DEBIAN_FRONTEND=noninteractive aptitude upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"  -f -q -y'
+            $update_command = 'aptitude clean && aptitude update && DEBIAN_FRONTEND=noninteractive aptitude upgrade -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"  -f -q -y'
             $updated_packages_command = 'grep "^`date +%F`" /var/log/dpkg.log |grep " upgrade \| install "|awk \'{print "package update: "$4" (old:"$5") (new:"$6")"}\''
         }
         
